@@ -325,42 +325,42 @@ class billClass:
             self.var_price.set(row[2])
             self.var_qty.set(row[3])
         
-        def add_update_cart(self):
-            if not self.var_pid.get():
-                messagebox.showerror("Error", "Please select product from the list", parent=self.root)
-                return
-            if not self.var_qty.get():
-                messagebox.showerror("Error", "Quantity is required", parent=self.root)
-                return
-            if int(self.var_qty.get()) > int(self.var_stock.get()):
-                messagebox.showerror("Error", "Invalid Quantity", parent=self.root)
-                return
+    def add_update_cart(self):
+        if not self.var_pid.get():
+            messagebox.showerror("Error", "Please select product from the list", parent=self.root)
+            return
+        if not self.var_qty.get():
+            messagebox.showerror("Error", "Quantity is required", parent=self.root)
+            return
+        if int(self.var_qty.get()) > int(self.var_stock.get()):
+            messagebox.showerror("Error", "Invalid Quantity", parent=self.root)
+            return
     
-            cart_data = [
-                self.var_pid.get(), self.var_pname.get(),
-                self.var_price.get(), self.var_qty.get(), self.var_stock.get()
-            ]
+        cart_data = [
+            self.var_pid.get(), self.var_pname.get(),
+            self.var_price.get(), self.var_qty.get(), self.var_stock.get()
+        ]
     
-            existing_index = next(
-                (i for i, row in enumerate(self.cart_list) if row[0] == self.var_pid.get()), None)
+        existing_index = next(
+            (i for i, row in enumerate(self.cart_list) if row[0] == self.var_pid.get()), None)
     
-            if existing_index is not None:
-                if messagebox.askyesno("Confirm",
-                                    "Product already present\nDo you want to Update|Remove from Cart?",
-                                    parent=self.root):
-                    if self.var_qty.get() == "0":
-                        self.cart_list.pop(existing_index)
-                    else:
-                        self.cart_list[existing_index][3] = self.var_qty.get()
-            else:
-                self.cart_list.append(cart_data)
+        if existing_index is not None:
+            if messagebox.askyesno("Confirm",
+                                "Product already present\nDo you want to Update|Remove from Cart?",
+                                parent=self.root):
+                if self.var_qty.get() == "0":
+                    self.cart_list.pop(existing_index)
+                else:
+                    self.cart_list[existing_index][3] = self.var_qty.get()
+        else:
+            self.cart_list.append(cart_data)
     
-            self.show_cart()
-            self.bill_update()
+        self.show_cart()
+        self.bill_update()
 
     def bill_update(self):
         # Recalculate totals and refresh the billing labels
-        bill_amount = sum(float(row[2]) * int(row[3]) for row in self.cart_list)
+        bill_amount = sum(float(str(row[2]).replace('$', '').replace(',', '').strip()) * int(row[3]) for row in self.cart_list)
         discount = bill_amount * DISCOUNT_RATE
         net_pay = bill_amount - discount
  
@@ -435,7 +435,7 @@ class billClass:
                 qty_sold = int(qty_sold)
                 remaining_qty = int(stock) - qty_sold
                 status = "Inactive" if remaining_qty == 0 else "Active"
-                line_total = float(price) * qty_sold
+                line_total = float(str(price).replace('$', '').replace(',', '').strip()) * qty_sold
  
                 self.txt_bill_area.insert(
                     END, f"\n {name}\t\t\t{qty_sold}\tRs.{line_total:.2f}")
