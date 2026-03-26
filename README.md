@@ -95,7 +95,7 @@ pip install pillow
 ### Setup and Run
 ```bash
 # 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/Inventory-Management-System.git
+git clone https://github.com/thethtarzin111/inventory-management-system.git
 cd Inventory-Management-System
 
 # 2. Create and activate virtual environment
