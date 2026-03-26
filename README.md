@@ -37,49 +37,73 @@ Inventory-Management-System/
 - Entry point of the application.
 - Displays the main window with a navigation menu and stat cards for Employee, Supplier, Category, Product, Sales, and Low Stock counts.
 - Stat cards update in real time every 200ms.
-- The **Low Stock Items** card turns red when any product stock falls at or below 5 units.
+- The **Low Stock Items** card turns red when any product stock falls at or below 5 units. *(new - T3)*
+
+![dashboard](screenshots/dashboard.png)
 
 ### 2. `employee.py`
-- Manages employee records (add, update, delete, search).
-- Search is supported by `email`, `name`, or `contact`.
+- This screen collects and shows the complete data regarding 
+  an `employee`.
+- Buttons are functionalised accordingly.
+- You can search an employee by its `email`, `name` or `contact`.
+
+![employee](screenshots/employee.png)
 
 ### 3. `supplier.py`
-- Manages supplier records (add, update, delete, search).
-- Search is supported by `invoice no`.
+- This screen collects and shows the complete data regarding 
+  `suppliers`.
+- Buttons are functionalised accordingly.
+- You can search a particular supplier by `invoice no`.
+
+![supplier](screenshots/supplier.png)
 
 ### 4. `category.py`
-- Manages product categories (add, delete).
-- Categories are linked to products.
+- This screen collects and shows the complete data about 
+  the `product`.
+- It also ensures the `availability` of the product.
+- Buttons are functionalised accordingly.
+- You can search a product by its `category`, `supplier` 
+  or `name`.
+
+![product](screenshots/category.png)
 
 ### 5. `product.py`
-- Manages product records (add, update, delete, search).
-- Search is supported by `category`, `supplier`, or `name`.
-- Linked to both category and supplier tables.
+- This screen collects and shows the information about the category of the product. For example, if the product name is `iPhone` then its category is `Phone`.
+- This screen contains 2 buttons namely `Add` and `Delete`. 
+  These buttons are functionalised accordingly.
+
+![category](screenshots/product.png)
 
 ### 6. `sales.py`
-- Displays saved customer bills from the `bill/` folder.
-- Search bills by `invoice no`.
+- This screen stores and shows the bills by `invoice no`.
+- Buttons are functionalised accordingly.
+
+![sales](screenshots/sales.png)
 
 ### 7. `billing.py`
-- Handles the full billing workflow including product selection, cart management, bill generation, and inventory deduction.
-- Includes a built-in calculator.
-- Applies a 5% discount automatically.
-- Saves generated bills as `.txt` files in the `bill/` folder.
+- This screen contains the complete billing workflow.
+- Contains information regarding `products`, `customers`, `the products they are buying`, `billing structure`, `price of product`, and `discount on the products`.
+- Applies a fixed 5% discount automatically.
+- Also contains a built-in `calculator` to calculate the total amount.
+- Bills are saved as `.txt` files in the `bill/` folder.
+- Buttons are functionalised accordingly.
 
-### 8. `low_stock.py` *(new - T3)*
-- Dedicated Low Stock Alert window.
-- Displays all products with quantity ≤ 5 units.
-- Red rows = out of stock, orange rows = critically low (1–5 units).
-- Accessible from the dashboard menu or by clicking the Low Stock stat card.
+![billing](screenshots/bills.png)
+
+### 8. `create_db.py`
+- Creates all required database tables on first run.
+- Must be run before `dashboard.py`, otherwise it will throw an error.
 
 ### 9. `db_helper.py` *(new - T2)*
 - Centralised database connection module.
 - Exposes a single `get_db_connection()` function used by all modules.
 - Resolves the database path dynamically using `os.path`.
 
-### 10. `create_db.py`
-- Creates all required database tables on first run.
-- Must be run before `dashboard.py`.
+### 10. `low_stock.py` *(new - T3)*
+- Dedicated Low Stock Alert window.
+- Displays all products with quantity ≤ 5 units in a colour-coded table.
+- Red rows = out of stock, orange rows = critically low (1–5 units).
+- Accessible from the dashboard menu or by clicking the Low Stock stat card.
 
 ## Getting Started
 
