@@ -92,7 +92,7 @@ class LowStockClass:
         con = get_db_connection()
         cur = con.cursor()
         try:
-            cur.execute("SELECT pid, name, Category, Supplier, price, qty, status"
+            cur.execute("SELECT pid, name, Category, Supplier, price, qty, status "
                         "FROM product WHERE CAST(qty AS INTEGER) <= ?", (LOW_STOCK_THRESHOLD,))
             rows = cur.fetchall()
             self.StockTable.delete(*self.StockTable.get_children())

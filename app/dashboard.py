@@ -9,6 +9,7 @@ from supplier import supplierClass
 from category import categoryClass
 from product import productClass
 from sales import salesClass
+from billing import billClass
 
 from low_stock import LowStockClass
 from db_helper import get_db_connection
@@ -77,6 +78,7 @@ class IMS:
             ("Supplier", self.supplier),
             ("Category", self.category),
             ("Products", self.product),
+            ("Billing", self.billing),
             ("Sales", self.sales),
             ("Low Stock", self.low_stock),   # NEW menu button
         ]
@@ -124,7 +126,7 @@ class IMS:
             fg="white", font=("goudy old style", 20, "bold"),
             cursor="hand2")
         self.lbl_product.place(x=300, y=300, height=150, width=300)
-        self.lbl_product.bind("<Button-1>", lambda e: self.low_stock())  # clickable shortcut
+        self.lbl_product.bind("<Button-1>", lambda e: self.product())
  
         self.lbl_sales = Label(
             self.root, text="Total Sales\n{ 0 }",
@@ -167,6 +169,10 @@ class IMS:
     def product(self):
         self.new_win = Toplevel(self.root)
         self.new_obj = productClass(self.new_win)
+
+    def billing(self):
+        self.new_win = Toplevel(self.root)
+        self.new_obj = billClass(self.new_win)
 
     def sales(self):
         self.new_win = Toplevel(self.root)
