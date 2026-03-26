@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+*.pyc
+app/ims.db
+app/bill/
+.pytest_cache/
