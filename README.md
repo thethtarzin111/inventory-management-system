@@ -1,88 +1,143 @@
-# Inventory-Management-System
-Inventory Management System is a python based project that uses `tkinter` modules for Graphical User Interface(GUI)
+# Inventory Management System
 
+A Python-based desktop Inventory Management System (IMS) built with `tkinter` for the GUI and `sqlite3` for local data storage.
 
-### Overview
-This project includes 8 python scripts that demonstrate how to interact with a Graphical User Interface(GUI) using `tkinter`, manage images using `pil`, date/time using `datetime`, database using `sqlite3` and fetching files from system using `os` module. In this project, there are total 8 python scripts which are connected to each other. The eight python scripts are as follows:-
-1. `dashboard.py`
-2. `employee.py`
-3. `supplier.py`
-4. `product.py`
-5. `category.py`
-6. `sales.py`
-7. `create_db.py`
-8. `billing.py`
+> This project was completed as part of the CT70A3000 Software Maintenance course, Spring 2026. The original codebase was refactored, extended with a new feature, and tested as part of the coursework.
 
-### 1. dashboard.py
-- This script is the dashboard of Inventory Management System containing buttons, images and labels and timing.
-- The screen shows the options for `Employee`, `Supplier`, `Category`, `Products` and `Sales` to perform CRUD operations.
-- This screen also updates timely as you perform operations on any of these Labels.
+## Overview
 
-![alt text](image.png)
+The IMS allows a business to manage employees, suppliers, product categories, products, and customer billing through a graphical user interface. The system has been refactored to improve code quality, extended with a Low Stock Alert feature, and covered with a pytest test suite.
 
-### 2. employee.py
-- This screen collects and shows the complete data regarding an `employee`.
-- Buttons are functionalised accordingly.
-- You can search an employee by its `email`, `name` or `contact`.
+### Project Structure
+```
+Inventory-Management-System/
+├── app/
+│   ├── dashboard.py       ← entry point
+│   ├── employee.py
+│   ├── supplier.py
+│   ├── category.py
+│   ├── product.py
+│   ├── sales.py
+│   ├── billing.py
+│   ├── low_stock.py       ← new feature (T3)
+│   ├── create_db.py
+│   ├── db_helper.py       ← centralised DB connection (T2)
+│   ├── images/
+│   └── bill/
+└── tests/
+    ├── conftest.py
+    ├── test_unit.py
+    ├── test_integration.py
+    └── test_regression.py
+```
 
-![alt text](image-1.png)
+## Modules
 
-### 3. supplier.py
-- This screen collects and shows the complete data regarding `suppliers`.
-- Buttons are functionalised accordingly.
-- You can search a particular supplier details by `invoice no`.
+### 1. `dashboard.py`
+- Entry point of the application.
+- Displays the main window with a navigation menu and stat cards for Employee, Supplier, Category, Product, Sales, and Low Stock counts.
+- Stat cards update in real time every 200ms.
+- The **Low Stock Items** card turns red when any product stock falls at or below 5 units.
 
-![alt text](image-2.png)
+### 2. `employee.py`
+- Manages employee records (add, update, delete, search).
+- Search is supported by `email`, `name`, or `contact`.
 
-### 4. product.py
-- This screen collects and shows the complete data about the `product`.
-- It also ensures the `availability` of the product
-- Buttons are functionalised accordingly.
-- You can search a product by its `category`, `supplier` or `name`.
+### 3. `supplier.py`
+- Manages supplier records (add, update, delete, search).
+- Search is supported by `invoice no`.
 
-![alt text](image-3.png)
+### 4. `category.py`
+- Manages product categories (add, delete).
+- Categories are linked to products.
 
-### 5. category.py
-- This screen collects and shows the information about the category of the product. LIKE:- If Product name is `IPhone` then its category is `Phone`.
-- This screen contains 2 buttons namely `add` and `delete`. These buttons are functionalised accordingly.
+### 5. `product.py`
+- Manages product records (add, update, delete, search).
+- Search is supported by `category`, `supplier`, or `name`.
+- Linked to both category and supplier tables.
 
-![alt text](image-4.png)
+### 6. `sales.py`
+- Displays saved customer bills from the `bill/` folder.
+- Search bills by `invoice no`.
 
-### 6. sales.py
-- This screen stores and shows the bills by an `invoice no`.
-- Buttons are functionalised accordingly.
+### 7. `billing.py`
+- Handles the full billing workflow including product selection, cart management, bill generation, and inventory deduction.
+- Includes a built-in calculator.
+- Applies a 5% discount automatically.
+- Saves generated bills as `.txt` files in the `bill/` folder.
 
-![alt text](image-5.png)
+### 8. `low_stock.py` *(new - T3)*
+- Dedicated Low Stock Alert window.
+- Displays all products with quantity ≤ 5 units.
+- Red rows = out of stock, orange rows = critically low (1–5 units).
+- Accessible from the dashboard menu or by clicking the Low Stock stat card.
 
-### 7. creat_db.py
-- This is the database file for all the tables.
-- You have to run this file `first` before running the `dashboard.py` file otherwise it will throw an error.
+### 9. `db_helper.py` *(new - T2)*
+- Centralised database connection module.
+- Exposes a single `get_db_connection()` function used by all modules.
+- Resolves the database path dynamically using `os.path`.
 
-### 8. billing.py
-- This screen contains all the billing part.
-- This screen contains information regarding the `products`, `customers`, `the products they are buying`, `billing structure`, `price of product`, `discout on the products`.
-- This screen also contains a `calculator` to calculate the total amount.
-- Buttons are functionalised accordingly.
+### 10. `create_db.py`
+- Creates all required database tables on first run.
+- Must be run before `dashboard.py`.
 
-![alt text](image-6.png)
+## Getting Started
 
-#### Detailed Steps:
-1. Click on the `create_db.py` file first and run it.
-2. Click on the `dashboard.py` file and run it.
-3. Click on the `employee button` to add employees.
-4. Click on the `supplier button` to add suppliers.
-5. Click on the `products button` to add products.
-6. Now click on the `billing.py` file for billing.
-7. Now click on the `dashboard.py` file and run it.
-8. Click on the `sales` button to see your billing.
+### Prerequisites
 
-### Pre-Requisites
-Ensure that you have the following Python Pakages installed in your PC:
-- `time`: `pip install time`
-- `pil`: `pip install pil`
-- `sqlite3`: `pip install sqlite3`
-- `os`: `pip install os`
+Make sure you have Python 3.12+ installed. Then install the required package:
+```bash
+pip install pillow
+```
 
-### Configuration
-- Before running `dashboard.py`, make sure to run `create_db.py` file first and create a folder named `bill` and `images`.
-- In `images` folder save your images regarding this project and in `bill` folder bills will automatically be saved.
+> Note: `tkinter`, `sqlite3`, `os`, and `time` are all part of the Python standard library — they do not need to be installed separately.
+
+### Setup and Run
+```bash
+# 1. Clone the repository
+git clone https://github.com/YOUR_USERNAME/Inventory-Management-System.git
+cd Inventory-Management-System
+
+# 2. Create and activate virtual environment
+python -m venv venv
+venv\Scripts\activate      # Windows
+source venv/bin/activate   # Mac/Linux
+
+# 3. Install dependencies
+pip install pillow
+
+# 4. Navigate to app folder and initialise the database
+cd app
+python create_db.py
+
+# 5. Run the application
+python dashboard.py
+```
+
+## Running Tests
+```bash
+# From the project root
+pip install pytest
+pytest tests/ -v
+```
+
+All 14 tests should pass.
+
+## What Was Changed (Course Tasks)
+
+| Task | Description |
+|------|-------------|
+| T1 | Code comprehension - class diagram, sequence diagram, dependency graph, architecture description |
+| T2 | Refactoring - centralised DB connection, fixed SQL injection, fixed unclosed connections, fixed logic bug in product validation, renamed variables to proper types |
+| T3 | New feature - Low Stock Alert system (dashboard integration + dedicated window) |
+| T4 | Test suite - 8 unit tests, 2 integration tests, 4 regression tests using pytest |
+
+## Dependencies
+
+| Package | Purpose | Install |
+|---------|---------|---------|
+| `Pillow` | Image rendering | `pip install pillow` |
+| `tkinter` | GUI framework | Built-in |
+| `sqlite3` | Database | Built-in |
+| `pytest` | Testing | `pip install pytest` |
+| `os`, `time` | System utilities | Built-in |
